@@ -1,33 +1,63 @@
-import apiClient from './axios';
+import { supabase } from './supabaseClient';
 
-export const transactionApi = {
-    getTransactions: async (params) => {
-        const response = await apiClient.get('/transactions/', { params });
-        return response.data;
-    },
-
-    createTransaction: async (data) => {
-        const response = await apiClient.post('/transactions/', data);
-        return response.data;
-    },
-
-    deleteTransaction: async (id) => {
-        const response = await apiClient.delete(`/transactions/${id}`);
-        return response.data;
-    },
-
-    getCategories: async () => {
-        const response = await apiClient.get('/transactions/categories');
-        return response.data;
-    },
-
+export const transactionsApi = {
     getAccounts: async () => {
-        const response = await apiClient.get('/transactions/accounts');
-        return response.data;
+        const { data, error } = await supabase
+            .from('finance_accounts')
+            .select('*')
+            .order('name');
+        if (error) throw error;
+        return data;
     },
 
-    createAccount: async (data) => {
-        const response = await apiClient.post('/transactions/accounts', data);
-        return response.data;
+    createAccount: async (accountData) => {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+            .from('finance_accounts')
+            .insert([{ ...accountData, user_id: user.id }])
+            .select()
+            .single();
+        if (error) throw error;
+        return data;
     },
+
+    getTransactions: async () => {
+        const { data, error } = await supabase
+            .from('finance_transactions')
+            .select(`
+                *,
+                account:account_id (
+                    name
+                )
+            `)
+            .order('date', { ascending: false });
+        if (error) throw error;
+        return data;
+    },
+
+    createTransaction: async (transactionData) => {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { data, error } = await supabase
+            .from('finance_transactions')
+            .insert([{ ...transactionData, user_id: user.id }])
+            .select()
+            .single();
+        if (error) throw error;
+
+        // Update account balance
+        if (transactionData.amount) {
+            const { data: account } = await supabase
+                .from('finance_accounts')
+                .select('balance')
+                .eq('id', transactionData.account_id)
+                .single();
+
+            await supabase
+                .from('finance_accounts')
+                .update({ balance: Number(account.balance) + Number(transactionData.amount) })
+                .eq('id', transactionData.account_id);
+        }
+
+        return data;
+    }
 };

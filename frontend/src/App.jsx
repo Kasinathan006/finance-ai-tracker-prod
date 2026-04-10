@@ -1,56 +1,78 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import TransactionsPage from './pages/TransactionsPage';
-import DashboardPage from './pages/DashboardPage';
-import BudgetsPage from './pages/BudgetsPage';
-import { useAuthStore } from './store/authStore';
+import Navbar from './components/layout/Navbar';
+import Dashboard from './pages/Dashboard';
+import Transactions from './pages/Transactions';
+import Budgets from './pages/Budgets';
+import Analytics from './pages/Analytics';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import useAuthStore from './store/authStore';
+import { supabase } from './api/supabaseClient';
 
-// Protected Route Component
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const { user, loading } = useAuthStore();
+
+  if (loading) return (
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+    </div>
+  );
+
+  if (!user) return <Navigate to="/login" />;
+  return children;
 };
 
 function App() {
+  const { setUser, setLoading } = useAuthStore();
+
+  useEffect(() => {
+    // Check active session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [setUser, setLoading]);
+
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/transactions"
-          element={
-            <ProtectedRoute>
-              <TransactionsPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/budgets"
-          element={
-            <ProtectedRoute>
-              <BudgetsPage />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
+      <div className="min-h-screen bg-gray-900 text-gray-100">
+        <Navbar />
+        <main className="container mx-auto px-4 py-8">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/transactions" element={
+              <ProtectedRoute>
+                <Transactions />
+              </ProtectedRoute>
+            } />
+            <Route path="/budgets" element={
+              <ProtectedRoute>
+                <Budgets />
+              </ProtectedRoute>
+            } />
+            <Route path="/analytics" element={
+              <ProtectedRoute>
+                <Analytics />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </main>
+      </div>
     </Router>
   );
 }

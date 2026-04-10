@@ -1,31 +1,31 @@
-import apiClient from './axios';
+import { supabase } from './supabaseClient';
 
 export const authApi = {
     login: async (email, password) => {
-        const formData = new FormData();
-        formData.append('username', email);
-        formData.append('password', password);
-
-        // In main.py: app.include_router(auth.router, prefix="/api/auth", tags=["authentication"])
-        // And in auth.py: @router.post("/login", response_model=Token)
-        // So the full URL is /api/auth/login
-        const response = await apiClient.post('/auth/login', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
         });
-        return response.data;
+        if (error) throw error;
+        return data;
     },
 
-    register: async (userData) => {
-        // URL: /api/auth/register
-        const response = await apiClient.post('/auth/register', userData);
-        return response.data;
+    register: async (email, password) => {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+        });
+        if (error) throw error;
+        return data;
     },
 
     getMe: async () => {
-        // URL: /api/auth/me
-        const response = await apiClient.get('/auth/me');
-        return response.data;
+        const { data: { user } } = await supabase.auth.getUser();
+        return user;
     },
+
+    logout: async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+    }
 };

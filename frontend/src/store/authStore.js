@@ -1,29 +1,11 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-export const useAuthStore = create(
-    persist(
-        (set) => ({
-            user: null,
-            token: null,
-            isAuthenticated: false,
+const useAuthStore = create((set) => ({
+    user: null,
+    loading: true,
+    setUser: (user) => set({ user }),
+    setLoading: (loading) => set({ loading }),
+    logout: () => set({ user: null }),
+}));
 
-            setAuth: (user, token) => set({
-                user,
-                token,
-                isAuthenticated: true
-            }),
-
-            logout: () => set({
-                user: null,
-                token: null,
-                isAuthenticated: false
-            }),
-
-            updateUser: (user) => set({ user }),
-        }),
-        {
-            name: 'finance-auth-storage',
-        }
-    )
-);
+export default useAuthStore;
