@@ -36,12 +36,11 @@ const RegisterPage = () => {
             });
 
             // Auto login after registration
-            const loginData = await authApi.login(formData.email, formData.password);
-            setAuth(null, loginData.access_token);
-            const userData = await authApi.getMe();
-            setAuth(userData, loginData.access_token);
-
-            navigate('/dashboard');
+            const data = await authApi.login(formData.email, formData.password);
+            if (data.user) {
+                setAuth(data.user);
+                navigate('/dashboard');
+            }
         } catch (err) {
             setError(err.response?.data?.detail || 'Registration failed. Try again.');
         } finally {

@@ -21,11 +21,10 @@ const LoginPage = () => {
 
         try {
             const data = await authApi.login(email, password);
-            setAuth(null, data.access_token);
-            const userData = await authApi.getMe();
-            setAuth(userData, data.access_token);
-
-            navigate('/dashboard');
+            if (data.user) {
+                setAuth(data.user);
+                navigate('/dashboard');
+            }
         } catch (err) {
             setError(err.response?.data?.detail || 'Invalid email or password');
         } finally {

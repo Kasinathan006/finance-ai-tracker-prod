@@ -10,10 +10,15 @@ export const authApi = {
         return data;
     },
 
-    register: async (email, password) => {
+    register: async ({ email, password, full_name }) => {
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
+            options: {
+                data: {
+                    full_name: full_name
+                }
+            }
         });
         if (error) throw error;
         return data;
