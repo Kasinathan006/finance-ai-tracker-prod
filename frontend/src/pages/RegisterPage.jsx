@@ -30,13 +30,13 @@ const RegisterPage = () => {
 
         try {
             await authApi.register({
-                email: formData.email,
+                email: formData.email.trim(),
                 password: formData.password,
-                full_name: formData.full_name
+                full_name: formData.full_name.trim()
             });
 
             // Auto login after registration
-            const data = await authApi.login(formData.email, formData.password);
+            const data = await authApi.login(formData.email.trim(), formData.password);
             if (data.user) {
                 setAuth(data.user);
                 navigate('/dashboard');

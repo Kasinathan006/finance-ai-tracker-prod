@@ -20,7 +20,7 @@ const LoginPage = () => {
         setError('');
 
         try {
-            const data = await authApi.login(email, password);
+            const data = await authApi.login(email.trim(), password);
             if (data.user) {
                 setAuth(data.user);
                 navigate('/dashboard');
