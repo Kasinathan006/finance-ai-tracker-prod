@@ -11,7 +11,7 @@ const AddTransactionModal = ({ isOpen, onClose, onRefresh, categories, accounts 
         description: '',
         date: new Date().toISOString().split('T')[0],
         type: 'expense',
-        category_id: '',
+        category: '',
         account_id: ''
     });
 
@@ -30,7 +30,7 @@ const AddTransactionModal = ({ isOpen, onClose, onRefresh, categories, accounts 
                 description: '',
                 date: new Date().toISOString().split('T')[0],
                 type: 'expense',
-                category_id: '',
+                category: '',
                 account_id: ''
             });
         } catch (err) {
@@ -142,13 +142,13 @@ const AddTransactionModal = ({ isOpen, onClose, onRefresh, categories, accounts 
                                                 </div>
                                                 <select
                                                     required
-                                                    value={formData.category_id}
-                                                    onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+                                                    value={formData.category}
+                                                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                                                     className="block w-full pl-11 pr-4 py-3.5 bg-slate-800/30 border border-slate-800 rounded-2xl text-white appearance-none focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all text-sm"
                                                 >
                                                     <option value="">Select Category</option>
-                                                    {categories.map(c => (
-                                                        <option key={c.id} value={c.id}>{c.name}</option>
+                                                    {(categories || []).map(cat => (
+                                                        <option key={cat} value={cat}>{cat}</option>
                                                     ))}
                                                 </select>
                                             </div>

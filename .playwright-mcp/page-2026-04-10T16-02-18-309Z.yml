@@ -1,0 +1,206 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - generic [ref=e9]:
+            - link [ref=e10] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects
+            - button [ref=e14] [cursor=pointer]:
+              - img [ref=e16]
+          - button "Find… F" [ref=e19]:
+            - generic [ref=e21]:
+              - img [ref=e23]
+              - generic [ref=e25]: Find…
+              - generic [ref=e27]: F
+        - navigation [ref=e29]:
+          - generic [ref=e32]:
+            - link "Overview" [ref=e33] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker
+              - generic [ref=e36]: Overview
+            - link "Deployments" [ref=e37] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/deployments
+              - img [ref=e39]
+              - generic [ref=e42]: Deployments
+            - link "Logs" [ref=e43] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/logs
+              - img [ref=e45]
+              - generic [ref=e48]: Logs
+            - link "Analytics" [ref=e49] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/analytics
+              - img [ref=e51]
+              - generic [ref=e54]: Analytics
+            - link "Speed Insights" [ref=e55] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/speed-insights
+              - img [ref=e57]
+              - generic [ref=e60]: Speed Insights
+            - link "Observability" [ref=e61] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/observability
+              - img [ref=e63]
+              - generic [ref=e66]: Observability
+              - img [ref=e68]
+            - link "Firewall" [ref=e70] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/firewall
+              - img [ref=e72]
+              - generic [ref=e76]: Firewall
+              - img [ref=e78]
+            - link "CDN" [ref=e80] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/cdn
+              - img [ref=e82]
+              - generic [ref=e85]: CDN
+              - img [ref=e87]
+            - separator [ref=e89]
+            - link "Domains" [ref=e90] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/settings/domains
+              - img [ref=e92]
+              - generic [ref=e95]: Domains
+            - link "Integrations" [ref=e96] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/settings/integrations
+              - img [ref=e98]
+              - generic [ref=e101]: Integrations
+            - link "Storage" [ref=e102] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/stores
+              - img [ref=e104]
+              - generic [ref=e107]: Storage
+            - link "Flags" [ref=e108] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/flags
+              - img [ref=e110]
+              - generic [ref=e113]: Flags
+              - img [ref=e115]
+            - link "Agent" [ref=e117] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/agent
+              - img [ref=e119]
+              - generic [ref=e122]: Agent
+              - img [ref=e124]
+            - link "AI Gateway" [ref=e126] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/ai-gateway
+              - img [ref=e128]
+              - generic [ref=e131]: AI Gateway
+              - img [ref=e133]
+            - link "Sandboxes" [ref=e135] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/sandboxes
+              - img [ref=e137]
+              - generic [ref=e140]: Sandboxes
+            - separator [ref=e141]
+            - link "Usage" [ref=e142] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/usage
+              - img [ref=e144]
+              - generic [ref=e147]: Usage
+            - link "Support" [ref=e148] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/support
+              - img [ref=e150]
+              - generic [ref=e153]: Support
+            - link "Settings" [ref=e154] [cursor=pointer]:
+              - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/settings
+              - img [ref=e156]
+              - generic [ref=e159]: Settings
+              - img [ref=e161]
+        - generic [ref=e165]:
+          - button [disabled]:
+            - img
+            - generic:
+              - img
+          - img [ref=e168]
+      - button [ref=e171] [cursor=pointer]:
+        - img [ref=e172]
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - generic [ref=e179]:
+          - link [ref=e180] [cursor=pointer]:
+            - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker
+          - button [ref=e182] [cursor=pointer]:
+            - img [ref=e184]
+          - link "Back to team view" [ref=e188] [cursor=pointer]:
+            - /url: /mohankasinathan06-4996s-projects
+            - img [ref=e190]
+        - generic [ref=e193]: Overview
+        - button "Open page actions menu" [ref=e195] [cursor=pointer]:
+          - img [ref=e197]
+      - generic [ref=e201]:
+        - generic [ref=e206]:
+          - heading "Production Deployment" [level=3] [ref=e208]
+          - generic [ref=e222]:
+            - generic [ref=e225]:
+              - term [ref=e226]: Deployment
+              - definition [ref=e227]
+            - generic [ref=e232]:
+              - term [ref=e233]:
+                - generic [ref=e235]:
+                  - text: Domains
+                  - link [ref=e236] [cursor=pointer]:
+                    - /url: /mohankasinathan06-4996s-projects/finance-ai-tracker/settings/domains
+                    - img [ref=e237]
+              - definition [ref=e239]
+            - generic [ref=e241]:
+              - generic [ref=e242]:
+                - term [ref=e243]: Status
+                - definition [ref=e244]
+              - generic [ref=e247]:
+                - term [ref=e248]: Created
+                - definition [ref=e249]
+            - generic [ref=e252]:
+              - term [ref=e253]: Source
+              - definition [ref=e254]
+          - button "Deployment Settings" [disabled] [ref=e260]:
+            - generic [ref=e261]:
+              - img [ref=e262]
+              - generic [ref=e265]: Deployment Settings
+        - generic [ref=e274]:
+          - generic [ref=e275]:
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - paragraph [ref=e278]:
+                  - strong [ref=e279]: Production Checklist
+                - generic [ref=e281]: 0/5
+              - button "Go to page" [ref=e282] [cursor=pointer]:
+                - img [ref=e284]
+              - button [ref=e286] [cursor=pointer]
+            - generic [ref=e290]:
+              - button "Connect Git Repository" [ref=e291] [cursor=pointer]:
+                - img [ref=e292]
+                - generic [ref=e294]: Connect Git Repository
+              - button "Add Custom Domain" [ref=e295] [cursor=pointer]:
+                - img [ref=e296]
+                - generic [ref=e298]: Add Custom Domain
+              - button "Preview Deployment" [ref=e299] [cursor=pointer]:
+                - img [ref=e300]
+                - generic [ref=e302]: Preview Deployment
+              - button "Enable Web Analytics" [ref=e303] [cursor=pointer]:
+                - img [ref=e304]
+                - generic [ref=e306]: Enable Web Analytics
+              - button "Enable Speed Insights" [ref=e307] [cursor=pointer]:
+                - img [ref=e308]
+                - generic [ref=e310]: Enable Speed Insights
+          - generic [ref=e311]:
+            - generic [ref=e312]:
+              - generic [ref=e313]:
+                - paragraph [ref=e314]:
+                  - strong [ref=e315]: Observability
+                - time [ref=e316]: 6h
+              - link "Go to page" [ref=e317] [cursor=pointer]:
+                - /url: "#"
+                - img [ref=e319]
+              - link [ref=e321] [cursor=pointer]:
+                - /url: "#"
+            - generic [ref=e323]:
+              - generic [ref=e325]: Edge Requests
+              - generic [ref=e330]: Function Invocations
+              - generic [ref=e335]: Error Rate
+          - generic [ref=e341]:
+            - paragraph [ref=e342]:
+              - strong [ref=e343]: Analytics
+            - time [ref=e344]: 1w
+        - generic [ref=e358]:
+          - img [ref=e361]
+          - img [ref=e372]
+          - img [ref=e383]
+          - img [ref=e394]
+          - generic [ref=e403]:
+            - img [ref=e406]
+            - img [ref=e417]
+            - img [ref=e428]
+            - img [ref=e439]
+            - img [ref=e450]
+            - img [ref=e461]

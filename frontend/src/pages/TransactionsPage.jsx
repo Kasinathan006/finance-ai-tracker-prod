@@ -163,10 +163,9 @@ const TransactionsPage = () => {
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <div className="flex items-center space-x-2">
                                                         <div
-                                                            className="w-2 h-2 rounded-full"
-                                                            style={{ backgroundColor: t.category?.color || '#ccc' }}
+                                                            className="w-2 h-2 rounded-full bg-cyan-500"
                                                         ></div>
-                                                        <span className="text-slate-300">{t.category?.name || 'Uncategorized'}</span>
+                                                        <span className="text-slate-300">{t.category || 'Uncategorized'}</span>
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4 max-w-xs truncate text-slate-400">
