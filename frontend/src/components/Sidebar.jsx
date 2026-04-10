@@ -9,7 +9,7 @@ import {
     LogOut,
     TrendingUp
 } from 'lucide-react';
-import { useAuthStore } from '../store/authStore';
+import useAuthStore from '../store/authStore';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 

@@ -10,7 +10,7 @@ import {
     Trash2,
     Calendar as CalendarIcon
 } from 'lucide-react';
-import { transactionApi } from '../api/transactions';
+import { transactionsApi } from '../api/transactions';
 import { format } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
 import AddTransactionModal from '../components/AddTransactionModal';
@@ -35,9 +35,9 @@ const TransactionsPage = () => {
         setLoading(true);
         try {
             const [transData, catsData, accsData] = await Promise.all([
-                transactionApi.getTransactions(),
-                transactionApi.getCategories(),
-                transactionApi.getAccounts()
+                transactionsApi.getTransactions(),
+                transactionsApi.getCategories(),
+                transactionsApi.getAccounts()
             ]);
             setTransactions(transData);
             setCategories(catsData);
@@ -52,7 +52,7 @@ const TransactionsPage = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this transaction?')) {
             try {
-                await transactionApi.deleteTransaction(id);
+                await transactionsApi.deleteTransaction(id);
                 setTransactions(transactions.filter(t => t.id !== id));
             } catch (err) {
                 alert('Failed to delete transaction');

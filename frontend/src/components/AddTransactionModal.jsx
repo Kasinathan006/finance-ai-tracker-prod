@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Loader2, Calendar, Tag, CreditCard, FileText, BadgeDollarSign } from 'lucide-react';
-import { transactionApi } from '../api/transactions';
+import { transactionsApi } from '../api/transactions';
 import { cn } from '../utils/cn';
 
 const AddTransactionModal = ({ isOpen, onClose, onRefresh, categories, accounts }) => {
@@ -19,7 +19,7 @@ const AddTransactionModal = ({ isOpen, onClose, onRefresh, categories, accounts 
         e.preventDefault();
         setLoading(true);
         try {
-            await transactionApi.createTransaction({
+            await transactionsApi.createTransaction({
                 ...formData,
                 amount: parseFloat(formData.amount)
             });

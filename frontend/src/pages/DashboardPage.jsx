@@ -19,8 +19,8 @@ import {
     Tooltip,
     ResponsiveContainer
 } from 'recharts';
-import { transactionApi } from '../api/transactions';
-import { budgetApi } from '../api/budgets';
+import { transactionsApi } from '../api/transactions';
+import { budgetsApi } from '../api/budgets';
 import { analyticsApi } from '../api/analytics';
 import { format, subMonths } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -50,10 +50,10 @@ const DashboardPage = () => {
         setLoading(true);
         try {
             const [transactions, accounts, insights, budgetList] = await Promise.all([
-                transactionApi.getTransactions({ limit: 100 }),
-                transactionApi.getAccounts(),
+                transactionsApi.getTransactions({ limit: 100 }),
+                transactionsApi.getAccounts(),
                 analyticsApi.getInsights(),
-                budgetApi.getBudgets()
+                budgetsApi.getBudgets()
             ]);
 
             setInsightData({

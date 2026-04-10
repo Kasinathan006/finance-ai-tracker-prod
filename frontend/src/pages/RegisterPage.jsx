@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mail, Lock, User, Loader2, ArrowRight } from 'lucide-react';
 import { authApi } from '../api/auth';
-import { useAuthStore } from '../store/authStore';
+import useAuthStore from '../store/authStore';
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({

@@ -12,8 +12,8 @@ import {
     ArrowDownRight,
     Clock
 } from 'lucide-react';
-import { budgetApi } from '../api/budgets';
-import { transactionApi } from '../api/transactions';
+import { budgetsApi } from '../api/budgets';
+import { transactionsApi } from '../api/transactions';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../utils/cn';
 
@@ -33,9 +33,9 @@ const BudgetsPage = () => {
         setLoading(true);
         try {
             const [budgetsData, goalsData, catsData] = await Promise.all([
-                budgetApi.getBudgets(),
-                budgetApi.getSavingsGoals(),
-                transactionApi.getCategories()
+                budgetsApi.getBudgets(),
+                budgetsApi.getSavingsGoals(),
+                transactionsApi.getCategories()
             ]);
             setBudgets(budgetsData);
             setSavingsGoals(goalsData);
@@ -50,7 +50,7 @@ const BudgetsPage = () => {
     const handleDeleteBudget = async (id) => {
         if (window.confirm('Delete this budget?')) {
             try {
-                await budgetApi.deleteBudget(id);
+                await budgetsApi.deleteBudget(id);
                 setBudgets(budgets.filter(b => b.id !== id));
             } catch (err) {
                 alert('Failed to delete budget');
@@ -244,7 +244,7 @@ const AddBudgetModal = ({ isOpen, onClose, categories, onRefresh }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await budgetApi.createBudget({
+            await budgetsApi.createBudget({
                 amount: parseFloat(amount),
                 category_id: categoryId,
                 period: 'monthly'

@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
-import Dashboard from './pages/Dashboard';
-import Transactions from './pages/Transactions';
-import Budgets from './pages/Budgets';
-import Analytics from './pages/Analytics';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Navbar from './components/Navbar';
+import Dashboard from './pages/DashboardPage';
+import Transactions from './pages/TransactionsPage';
+import Budgets from './pages/BudgetsPage';
+import Login from './pages/LoginPage';
+import Register from './pages/RegisterPage';
 import useAuthStore from './store/authStore';
 import { supabase } from './api/supabaseClient';
 
@@ -63,11 +62,6 @@ function App() {
             <Route path="/budgets" element={
               <ProtectedRoute>
                 <Budgets />
-              </ProtectedRoute>
-            } />
-            <Route path="/analytics" element={
-              <ProtectedRoute>
-                <Analytics />
               </ProtectedRoute>
             } />
           </Routes>

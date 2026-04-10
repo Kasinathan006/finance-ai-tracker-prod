@@ -59,5 +59,23 @@ export const transactionsApi = {
         }
 
         return data;
+    },
+
+    getCategories: async () => {
+        // Return a list of standard categories
+        return [
+            "Food & Dining",
+            "Shopping",
+            "Housing",
+            "Transportation",
+            "Entertainment",
+            "Personal Care",
+            "Health",
+            "Education",
+            "Gifts & Donations",
+            "Investments",
+            "Income",
+            "Others"
+        ];
     }
 };
