@@ -42,7 +42,8 @@ const RegisterPage = () => {
                 navigate('/dashboard');
             }
         } catch (err) {
-            setError(err.response?.data?.detail || 'Registration failed. Try again.');
+            console.error('Registration Error:', err);
+            setError(err.message || err.msg || err.error_description || 'Registration failed. Try again.');
         } finally {
             setLoading(false);
         }
