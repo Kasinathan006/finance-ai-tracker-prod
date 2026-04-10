@@ -77,7 +77,7 @@ const BudgetsPage = () => {
                             <Target size={24} />
                         </div>
                         <div>
-                            <h3 className="text-white font-bold text-lg">{budget.category?.name}</h3>
+                            <h3 className="text-white font-bold text-lg">{budget.category || 'Uncategorized'}</h3>
                             <p className="text-slate-500 text-sm flex items-center">
                                 <Clock size={14} className="mr-1" /> {budget.period}
                             </p>
@@ -237,7 +237,7 @@ const BudgetsPage = () => {
 // Internal minimal component for setting budget
 const AddBudgetModal = ({ isOpen, onClose, categories, onRefresh }) => {
     const [amount, setAmount] = useState('');
-    const [categoryId, setCategoryId] = useState('');
+    const [category, setCategory] = useState('');
 
     if (!isOpen) return null;
 
@@ -246,7 +246,7 @@ const AddBudgetModal = ({ isOpen, onClose, categories, onRefresh }) => {
         try {
             await budgetsApi.createBudget({
                 amount: parseFloat(amount),
-                category_id: categoryId,
+                category: category,
                 period: 'monthly'
             });
             onRefresh();
@@ -268,13 +268,13 @@ const AddBudgetModal = ({ isOpen, onClose, categories, onRefresh }) => {
                     <div className="space-y-2">
                         <label className="text-slate-400 text-sm font-bold ml-1">Category</label>
                         <select
-                            value={categoryId}
-                            onChange={(e) => setCategoryId(e.target.value)}
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
                             required
                             className="w-full bg-slate-950 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all font-medium appearance-none"
                         >
                             <option value="">Select category</option>
-                            {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            {(categories || []).map(cat => <option key={cat} value={cat}>{cat}</option>)}
                         </select>
                     </div>
                     <div className="space-y-2">
