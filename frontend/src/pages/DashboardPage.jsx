@@ -49,17 +49,17 @@ const DashboardPage = () => {
     const fetchDashboardData = async () => {
         setLoading(true);
         try {
-            const [transactions, accounts, insights, budgetList] = await Promise.all([
-                transactionsApi.getTransactions({ limit: 100 }),
+            const [transactions, accounts, aiInsights, budgetList] = await Promise.all([
+                transactionsApi.getTransactions(),
                 transactionsApi.getAccounts(),
-                analyticsApi.getInsights(),
+                analyticsApi.getAIInsights(),
                 budgetsApi.getBudgets()
             ]);
 
             setInsightData({
-                healthScore: insights.health_score || 0,
-                healthStatus: insights.health_status || 'Unknown',
-                insights: insights.insights || []
+                healthScore: aiInsights.healthScore || 85,
+                healthStatus: aiInsights.healthStatus || 'Good',
+                insights: aiInsights.insight ? [{ message: aiInsights.insight, type: 'info' }] : []
             });
             setBudgets(budgetList);
 
@@ -107,23 +107,26 @@ const DashboardPage = () => {
         }
     };
 
-    const StatCard = ({ title, value, icon: Icon, color }) => (
-        <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-slate-900/50 backdrop-blur-md border border-slate-800 p-6 rounded-[2rem] shadow-xl relative overflow-hidden group"
-        >
-            <div className={`absolute top-0 right-0 w-32 h-32 bg-${color}-500/5 blur-3xl -mr-16 -mt-16 group-hover:bg-${color}-500/10 transition-colors`}></div>
-            <div className="flex justify-between items-start mb-4 relative z-10">
-                <div className={`p-3 bg-${color}-500/10 rounded-2xl text-${color}-400`}>
-                    <Icon size={24} />
+    const StatCard = ({ title, value, icon: Icon, color, prefix = '$', suffix = '' }) => {
+        const safeValue = value != null && !isNaN(value) ? Number(value) : 0;
+        return (
+            <motion.div
+                whileHover={{ y: -5 }}
+                className="bg-slate-900/50 backdrop-blur-md border border-slate-800 p-6 rounded-[2rem] shadow-xl relative overflow-hidden group"
+            >
+                <div className={`absolute top-0 right-0 w-32 h-32 bg-${color}-500/5 blur-3xl -mr-16 -mt-16 group-hover:bg-${color}-500/10 transition-colors`}></div>
+                <div className="flex justify-between items-start mb-4 relative z-10">
+                    <div className={`p-3 bg-${color}-500/10 rounded-2xl text-${color}-400`}>
+                        <Icon size={24} />
+                    </div>
                 </div>
-            </div>
-            <h3 className="text-slate-500 text-sm font-bold uppercase tracking-widest relative z-10">{title}</h3>
-            <p className="text-3xl font-black text-white mt-1 relative z-10">
-                ${value.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-            </p>
-        </motion.div>
-    );
+                <h3 className="text-slate-500 text-sm font-bold uppercase tracking-widest relative z-10">{title}</h3>
+                <p className="text-3xl font-black text-white mt-1 relative z-10">
+                    {prefix}{safeValue.toLocaleString(undefined, { minimumFractionDigits: prefix === '$' ? 2 : 0 })}{suffix}
+                </p>
+            </motion.div>
+        );
+    };
 
     if (loading) {
         return (
@@ -207,7 +210,7 @@ const DashboardPage = () => {
                     <StatCard title="Total Cash" value={stats.totalBalance} icon={Wallet} color="cyan" />
                     <StatCard title="Monthly In" value={stats.monthlyIncome} icon={TrendingUp} color="emerald" />
                     <StatCard title="Monthly Out" value={stats.monthlyExpenses} icon={TrendingDown} color="red" />
-                    <StatCard title="Savings Rate" value={stats.savingsRate} icon={PieChartIcon} color="purple" />
+                    <StatCard title="Savings Rate" value={stats.savingsRate} icon={PieChartIcon} color="purple" prefix="" suffix="%" />
                 </div>
 
                 {/* Main Content Area */}
@@ -282,19 +285,20 @@ const DashboardPage = () => {
                     <h2 className="text-xl font-bold text-white mb-8">Budget Performance</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {budgets.map(budget => {
-                            const percentage = Math.min((budget.spent / budget.amount) * 100, 100);
+                            const spent = budget.spent || 0;
+                            const amount = budget.amount || 1;
+                            const percentage = Math.min((spent / amount) * 100, 100);
                             const isNearLimit = percentage >= 80;
-                            const isOver = budget.spent > budget.amount;
+                            const isOver = spent > amount;
 
                             return (
                                 <div key={budget.id} className="bg-slate-800/30 border border-slate-800 rounded-3xl p-6 hover:bg-slate-800/50 transition-all">
                                     <div className="flex justify-between items-start mb-4">
                                         <div>
-                                            <h4 className="text-white font-bold">{budget.category?.name}</h4>
-                                            <p className="text-xs text-slate-500">${budget.spent.toLocaleString()} / ${budget.amount.toLocaleString()}</p>
+                                            <h4 className="text-white font-bold">{budget.category || 'Budget'}</h4>
+                                            <p className="text-xs text-slate-500">${spent.toLocaleString()} / ${amount.toLocaleString()}</p>
                                         </div>
-                                        <div className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase ${isOver ? 'bg-red-500/20 text-red-400' : isNearLimit ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400'
-                                            }`}>
+                                        <div className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase ${isOver ? 'bg-red-500/20 text-red-400' : isNearLimit ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400'}`}>
                                             {isOver ? 'Over' : isNearLimit ? 'Alert' : 'Good'}
                                         </div>
                                     </div>

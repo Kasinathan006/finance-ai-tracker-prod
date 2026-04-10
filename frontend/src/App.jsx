@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import Dashboard from './pages/DashboardPage';
 import Transactions from './pages/TransactionsPage';
 import Budgets from './pages/BudgetsPage';
@@ -43,30 +42,27 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-900 text-gray-100">
-        {user && <Navbar />}
-        <main className="container mx-auto px-4 py-8">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/transactions" element={
-              <ProtectedRoute>
-                <Transactions />
-              </ProtectedRoute>
-            } />
-            <Route path="/budgets" element={
-              <ProtectedRoute>
-                <Budgets />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </main>
-      </div>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/transactions" element={
+          <ProtectedRoute>
+            <Transactions />
+          </ProtectedRoute>
+        } />
+        <Route path="/budgets" element={
+          <ProtectedRoute>
+            <Budgets />
+          </ProtectedRoute>
+        } />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
     </Router>
   );
 }
