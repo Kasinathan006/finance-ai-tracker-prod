@@ -1,0 +1,36 @@
+# Tests
+
+## Test 1 - App loads and shows sign in [sanity]
+Viewport: desktop
+Description: Verifies the app loads correctly and displays the Get Started button.
+
+Steps:
+1. Navigate to the app
+2. Wait for page to fully load
+3. Verify "Finance AI" heading is visible
+4. Verify "Get Started" button is visible
+
+Expected: Main heading and get started button are visible.
+
+## Test 2 - Sign in flow
+Viewport: desktop
+Description: Verifies that clicking Get Started opens the sign in popup.
+
+Steps:
+1. Navigate to the app
+2. Click "Get Started" button
+3. Verify sign in process starts (mocked or observed)
+
+Expected: Auth flow initiated.
+
+## Test 3 - Dashboard data loads
+Viewport: desktop
+Description: Verifies that the dashboard displays data after sign in.
+
+Steps:
+1. Signed in and on /dashboard
+2. Wait for "Synchronizing Data..." to disappear
+3. Verify "AI Financial Advisor" card is visible
+4. Verify "Total Cash" card is visible
+
+Expected: Dashboard charts and stats are rendered.
