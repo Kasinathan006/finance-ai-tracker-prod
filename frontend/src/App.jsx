@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Dashboard from './pages/DashboardPage';
 import Transactions from './pages/TransactionsPage';
 import Budgets from './pages/BudgetsPage';
+import Analytics from './pages/AnalyticsPage';
+import Settings from './pages/SettingsPage';
 import Login from './pages/LoginPage';
 import Register from './pages/RegisterPage';
 import useAuthStore from './store/authStore';
@@ -58,6 +60,16 @@ function App() {
         <Route path="/budgets" element={
           <ProtectedRoute>
             <Budgets />
+          </ProtectedRoute>
+        } />
+        <Route path="/analytics" element={
+          <ProtectedRoute>
+            <Analytics />
+          </ProtectedRoute>
+        } />
+        <Route path="/settings" element={
+          <ProtectedRoute>
+            <Settings />
           </ProtectedRoute>
         } />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
