@@ -37,9 +37,41 @@ export const transactionsApi = {
 
     createTransaction: async (transactionData) => {
         const { data: { user } } = await supabase.auth.getUser();
+        let accountId = transactionData.account_id;
+
+        // Auto-create account if 'temp-default' or missing
+        if (!accountId || accountId === 'temp-default') {
+            const { data: existingAccounts } = await supabase
+                .from('finance_accounts')
+                .select('id')
+                .eq('user_id', user.id)
+                .limit(1);
+
+            if (existingAccounts && existingAccounts.length > 0) {
+                accountId = existingAccounts[0].id;
+            } else {
+                const { data: newAccount, error: accError } = await supabase
+                    .from('finance_accounts')
+                    .insert([{
+                        user_id: user.id,
+                        name: 'Default Wallet',
+                        type: 'cash',
+                        balance: 0
+                    }])
+                    .select()
+                    .single();
+                if (accError) throw accError;
+                accountId = newAccount.id;
+            }
+        }
+
         const { data, error } = await supabase
             .from('finance_transactions')
-            .insert([{ ...transactionData, user_id: user.id }])
+            .insert([{
+                ...transactionData,
+                account_id: accountId,
+                user_id: user.id
+            }])
             .select()
             .single();
         if (error) throw error;
@@ -49,13 +81,15 @@ export const transactionsApi = {
             const { data: account } = await supabase
                 .from('finance_accounts')
                 .select('balance')
-                .eq('id', transactionData.account_id)
+                .eq('id', accountId)
                 .single();
 
-            await supabase
-                .from('finance_accounts')
-                .update({ balance: Number(account.balance) + Number(transactionData.amount) })
-                .eq('id', transactionData.account_id);
+            if (account) {
+                await supabase
+                    .from('finance_accounts')
+                    .update({ balance: Number(account.balance) + (transactionData.type === 'income' ? Number(transactionData.amount) : -Number(transactionData.amount)) })
+                    .eq('id', accountId);
+            }
         }
 
         return data;
